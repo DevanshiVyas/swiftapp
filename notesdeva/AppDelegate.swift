@@ -16,6 +16,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        let viewController = NoteTableViewController(nibName: nil, bundle: nil)
+        let navController = UINavigationController(rootViewController: viewController)
+        
+        window?.rootViewController = navController
+        
         return true
     }
 
