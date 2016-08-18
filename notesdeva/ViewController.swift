@@ -19,7 +19,7 @@ class NoteTableViewController: UITableViewController {
     }
     
     func addNote() {
-        var note = Note(title: nil, message: nil)
+        let note = Note(title: nil, message: nil)
         let editViewController = NoteEditViewController(note: note)
         
         let navController = UINavigationController(rootViewController:
@@ -50,15 +50,27 @@ class NoteTableViewController: UITableViewController {
         return tableViewCell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let note = notes[indexPath.row]
         
         let noteEditViewController = NoteEditViewController(note: note)
         let navController = UINavigationController(rootViewController: noteEditViewController)
         
         self.presentViewController(navController, animated: true) {
-            return
+            self.tableView.reloadData()
         }
+    }
+    
+    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            notes.removeAtIndex(indexPath.row)
+            self.tableView.reloadData()
+        }
+        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
